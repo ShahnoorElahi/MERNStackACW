@@ -1,7 +1,7 @@
-const Joi = require('joi');
+const Joi = require("joi");
 const User = require("../models/user");
-const UserDTO = require("../dto/user");
 const bcrypt = require("bcryptjs");
+const UserDTO = require("../dto/user");
 const JWTService = require("../services/JWTService");
 const RefreshToken = require("../models/token");
 
@@ -73,7 +73,7 @@ const authController = {
       user = await userToRegister.save();
 
       // token generation
-      accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
+      accessToken = JWTService.signAccessToken({ _id: user._id }, "1s");
 
       refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
     } catch (error) {
@@ -100,7 +100,6 @@ const authController = {
 
     return res.status(201).json({ user: userDto, auth: true });
   },
-
   async login(req, res, next) {
     // 1. validate user input
     // 2. if validation error, return error
@@ -156,7 +155,7 @@ const authController = {
       return next(error);
     }
 
-    const accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
+    const accessToken = JWTService.signAccessToken({ _id: user._id }, "1s");
     const refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
 
     // update refresh token in database
@@ -186,7 +185,6 @@ const authController = {
 
     return res.status(200).json({ user: userDto, auth: true });
   },
-
   async logout(req, res, next) {
     // 1. delete refresh token from db
     const { refreshToken } = req.cookies;
@@ -204,7 +202,6 @@ const authController = {
     // 2. response
     res.status(200).json({ user: null, auth: false });
   },
-
   async refresh(req, res, next) {
     // 1. get refreshToken from cookies
     // 2. verify refreshToken
@@ -245,7 +242,7 @@ const authController = {
     }
 
     try {
-      const accessToken = JWTService.signAccessToken({ _id: id }, "30m");
+      const accessToken = JWTService.signAccessToken({ _id: id }, "1s");
 
       const refreshToken = JWTService.signRefreshToken({ _id: id }, "60m");
 
@@ -270,8 +267,6 @@ const authController = {
 
     return res.status(200).json({ user: userDto, auth: true });
   },
-
-
 };
 
 module.exports = authController;

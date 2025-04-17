@@ -1,15 +1,12 @@
 const express = require('express');
 const authController = require('../controller/authController');
-const auth = require('../middlewares/auth');
 const blogController = require('../controller/blogController');
 const commentController = require('../controller/commentController');
-
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-// testing I
-router.get('/test', (req, res) => res.json({msg: 'Working!'}));
-
+// user
 
 // register
 router.post('/register', authController.register);
@@ -17,12 +14,11 @@ router.post('/register', authController.register);
 // login
 router.post('/login', authController.login);
 
-//logout
-router.post('/logout', auth, authController.logout);
+// logout
+router.post('/logout', auth, authController.logout)
 
-//refresh
-router.post('/refresh', auth, authController.refresh);
-
+// refresh
+router.get('/refresh', authController.refresh);
 
 // blog
 
@@ -41,7 +37,6 @@ router.put('/blog', auth, blogController.update);
 // delete
 router.delete('/blog/:id', auth, blogController.delete);
 
-
 // comment
 // create 
 router.post('/comment', auth, commentController.create);
@@ -49,5 +44,4 @@ router.post('/comment', auth, commentController.create);
 // get 
 router.get('/comment/:id', auth, commentController.getById);
 
-
-module.exports=router;
+module.exports = router;
