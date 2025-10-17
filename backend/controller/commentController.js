@@ -49,7 +49,7 @@ const commentController = {
         let comments;
 
         try{
-            comments = await Comment.find({blog: id})
+            comments = await Comment.find({blog: id}).populate('author');
         }
         catch(error){
             return next(error);
