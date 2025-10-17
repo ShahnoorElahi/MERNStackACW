@@ -8,7 +8,7 @@ import {
   getCommentsById,
 } from "../../api/internal";
 import { useNavigate } from "react-router-dom";
-// import Loader from "../../components/Loader/Loader";
+import Loader from "../../components/Loader/Loader";
 import styles from "./BlogDetails.module.css";
 import CommentList from "../../components/CommentList/CommentList";
 
@@ -39,7 +39,6 @@ function BlogDetails() {
         // set ownership
         setOwnsBlog(username === blogResponse.data.blog.authorUsername);
         setBlog(blogResponse.data.blog);
-        console.log("us",username,blogResponse);
       }
     }
     getBlogDetails();
@@ -69,7 +68,7 @@ function BlogDetails() {
   };
 
   if (blog.length === 0) {
-    return <></>;     //<Loader text="blog details" />;
+    return <Loader text="blog details" />;
   }
 
   return (
